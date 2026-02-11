@@ -189,34 +189,27 @@
   </div>
 
 </footer>
+  <script>
+    const createScrollObserver = (selector, threshold = 0.1) => {
+      const elements = document.querySelectorAll(selector);
 
-<script>
-  const blocks = document.querySelectorAll('.experience-block');
+      const observer = new IntersectionObserver((entries, observerInstance) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observerInstance.unobserve(entry.target);
+          }
+        });
+      }, { threshold });
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, { threshold: 0.5 });
+      elements.forEach(el => observer.observe(el));
+    };
 
-  blocks.forEach(block => observer.observe(block));
-</script>
-<script>
-  const priceCards = document.querySelectorAll('.price-card');
-
-  const priceObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, { threshold: 0.3 });
-
-  priceCards.forEach(card => priceObserver.observe(card));
-</script>
+    createScrollObserver('.experience-block', 0.5);
+    createScrollObserver('.price-card', 0.5);
+  </script>
 
 </body>
+
 
 </html>
